@@ -119,4 +119,35 @@ The program will:
 ### Question 2:
 
 
-### Question 3:
+### Question 3: Big-O Analysis
+
+Let `n = len(A)` and `m = len(B)`, where `A` and `B` are the two strings.
+
+#### Time Complexity
+
+The input and output parts only take linear time, so they are not then main cost of the algorithm.
+
+The main part is the function `compute_dp`. It builds a DP table of size `(n+1) x (m+1)`. The algorithm uses two neasted loops:
+- the outer loop runs `n` times
+- the inner loop runs `m` times
+
+So it fills about `nm` table entries. For each entry, it only does constant work: comparing two characters, looking up previous DP values, and taking a maximum. Therefore, filling the DP table takes: `O(nm)`
+
+After that, the function `reconstruct` backtracks through the DP table to recover one optimal subsequence. In each step, it moves up, left, or diagonally, so the total number of steps is at most `n + m`. Thus, reconstruction takes: `O(n + m)`
+
+So the total running time is: `O(nm) + O(n + m)`
+
+which is dominated by: `O(nm)`
+
+#### Space Complexity
+
+The main space usage also comes from the DP table. Since the table has `(n+1) x (m+1)` entries, it takes: `O(nm)` space.
+
+The input strings and the dictionary of character values use extra space, but these are much smaller than the DP table. The reconstructed subsequence also only uses at most `O(min(n, m))` space.
+
+So the total space complexity is dominated by the DP table, which is: `O(nm)`
+
+#### Final Answer
+
+- **Time Complexity:** `O(nm)`
+- **Space Complexity:** `O(nm)`

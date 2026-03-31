@@ -15,6 +15,10 @@ def parse_input(filename):
             - A (str): The first input string
             - B (str): The second input string
     """
+    # Return None if the path is invalid or the file does not exist
+    if not os.path.isfile(filename):
+        return None
+
     with open(filename, "r") as f:
         # Remove blank lines and trailing newline characters
         lines = [line.strip() for line in f if line.strip()]
@@ -129,6 +133,11 @@ def main():
         return
     
     filename = sys.argv[1]
+
+    # Check whether the input file exists before trying to open it
+    if not os.path.isfile(filename):
+        print(f"Error: cannot open input file '{filename}'")
+        return
 
     # Paese input
     value, A, B = parse_input(filename)

@@ -16,12 +16,17 @@ This repository contains the implementation for a COP4533 dynamic programming pr
   - dynamic programming table construction
   - subsequence reconstruction
   - output writing
+  
+- `generate_tests.py` : Script that generates 10 nontrivial input files for runtime testing.
 
 - `inputs/` : Example input files for testing the HVLCS solver
   - `example.in` : Sample HVLCS input file
+  - `test1.in` to `test10.in` : Nontrivial test files used for empirical runtime evaluation
 
 - `outputs/` : Generated program outputs
   - `example.out` : Output produced for `example.in`
+  - `test1.out` to `test10.out` : Output files produced for the generated runtime test inputs
+  - `runtime_graph.png` : Runtime graph for the 10 empirical test cases
 
 - `README.md` : Project documentation and usage instructions.
 
@@ -153,9 +158,60 @@ Although the runtime does not increase perfectly from left to right, this is exp
 Overall, the graph is still consistent with our algorithm. As the input sizes increase, the runtime also increases.
 
 
+### Question 2: Recurrence Equation
 
-### Question 2:
+**Definition.**  
+Let `OPT(i, j)` be the maximum total value of a common subsequence between the first `i` characters of string `A` and the first `j` characters of string `B`.
 
+#### Base Cases
+- `OPT(0, j) = 0` for all `j`
+- `OPT(i, 0) = 0` for all `i`
+
+This is because if one string is empty, then there is no common subsequence, so the maximum value is 0.
+
+#### Case 1: `A[i]` is not matched with `B[j]`
+Then the optimal solution must skip one of the two current characters.
+
+So we consider:
+- skip `A[i]`, giving `OPT(i-1, j)`
+- skip `B[j]`, giving `OPT(i, j-1)`
+
+#### Case 2: `A[i] = B[j]`
+If the two current characters are equal, then we have two possibilities:
+
+- **Include** this matching character in the subsequence.  
+  In this case, we gain `value(A[i])`, and the remaining problem becomes `OPT(i-1, j-1)`.
+
+  So this choice gives:
+
+  `value(A[i]) + OPT(i-1, j-1)`
+
+- **Do not include** this matching character.  
+  In this case, we still consider the best solution obtained by skipping one character from either string:
+
+    - `OPT(i-1, j)`
+    - `OPT(i, j-1)`
+
+Therefore, when `A[i] = B[j]`, we must compare all three possibilities.
+
+#### Recurrence
+Therefore,
+
+```text
+OPT(i, j) =
+    0                                             if i = 0 or j = 0
+    max(OPT(i-1, j), OPT(i, j-1))                 if A[i] != B[j]
+    max(OPT(i-1, j), OPT(i, j-1),
+        value(A[i]) + OPT(i-1, j-1))              if A[i] = B[j]
+```
+
+#### Why the Recurrence is Correct
+This recurrence is correct because any optimal common subsequence of `A[:i]` and `B[:j]` must fall into one of these cases.
+
+- If the current characters are different, they cannot both be the last character of the same common subsequence, so we must exclude one of them.
+- If the current characters are equal, an optimal solution may either include that matching character or skip it if skipping gives a higher total value.
+
+Thus, the recurrence considers all possible optimal choices and selects the one with maximum total value.
 
 ### Question 3: Big-O Analysis
 

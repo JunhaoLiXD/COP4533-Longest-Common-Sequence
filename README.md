@@ -111,6 +111,30 @@ The program will:
 
     outputs/example.out
 
+### Generate Additional Test Files
+
+To generate 10 nontrivial input files for runtime testing, run:
+
+    python3 generate_tests.py
+
+This will create:
+- inputs/test1.in
+- inputs/test2.in
+- ...
+- inputs/test10.in
+
+### Run Runtime Experiment
+
+To measure runtime on the 10 generated test files and create a graph, run:
+
+    python3 runtime_test.py
+
+This will save the runtime graph as:
+
+    outputs/runtime_graph.png
+
+
+
 ## Written Component
 
 ### Question 1:

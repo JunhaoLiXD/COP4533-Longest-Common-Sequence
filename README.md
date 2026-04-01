@@ -137,7 +137,21 @@ This will save the runtime graph as:
 
 ## Written Component
 
-### Question 1:
+### Question 1: Empirical Comparison
+
+we created 10 nontrivial input files where each file contains two strings of length at least 25. 
+We ran our HVLCS program on each input and measured the total runtime.
+
+The runtime graph is shown below:
+
+![Runtime Graph](outputs/runtime_graph.png)
+
+The runtime graph shows that the program runs efficiently on all 10 input files. 
+The measured runtimes stay within a small range of about 0.017 to 0.020 seconds.
+
+Although the runtime does not increase perfectly from left to right, this is expected for relatively small test cases. 
+Overall, the graph is still consistent with our algorithm. As the input sizes increase, the runtime also increases.
+
 
 
 ### Question 2:

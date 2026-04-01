@@ -131,7 +131,7 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python hvlcs.py input_file")
         return
-    
+
     filename = sys.argv[1]
 
     # Check whether the input file exists before trying to open it
@@ -155,7 +155,8 @@ def main():
 
     # Save the result to an output file
     os.makedirs("outputs", exist_ok=True)
-    output_file = "outputs/example.out"
+    base_name = os.path.splitext(os.path.basename(filename))[0]
+    output_file = f"outputs/{base_name}.out"
     write_output(output_file, max_val, output_seq)
 
 

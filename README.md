@@ -237,7 +237,7 @@ HVLCS(A, B, value):
                     dp[i-1][j],
                     dp[i][j-1],
                     dp[i-1][j-1] + value[A[i-1]]
-                )
+                ) 
             else:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 

@@ -215,6 +215,35 @@ Thus, the recurrence considers all possible optimal choices and selects the one 
 
 ### Question 3: Big-O Analysis
 
+#### Pseudocode
+
+```text
+HVLCS(A, B, value):
+    n = len(A)
+    m = len(B)
+
+    create dp table of size (n+1) x (m+1)
+
+    for i from 0 to n:
+        dp[i][0] = 0
+
+    for j from 0 to m:
+        dp[0][j] = 0
+
+    for i from 1 to n:
+        for j from 1 to m:
+            if A[i-1] == B[j-1]:
+                dp[i][j] = max(
+                    dp[i-1][j],
+                    dp[i][j-1],
+                    dp[i-1][j-1] + value[A[i-1]]
+                )
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
+    return dp[n][m]
+```
+
 Let `n = len(A)` and `m = len(B)`, where `A` and `B` are the two strings.
 
 #### Time Complexity
